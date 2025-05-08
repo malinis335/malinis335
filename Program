@@ -1,0 +1,51 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+
+# Load dataset
+# Replace with your actual file path or URL
+df = pd.read_csv('traffic_accidents.csv')
+
+# Display basic info
+print("Initial Data:")
+print(df.head())
+
+# Preprocess the data
+df.fillna(method='ffill', inplace=True)  # Fill missing values
+df = pd.get_dummies(df, drop_first=True)  # Convert categorical to numeric
+
+# Features and label
+target_column = 'Accident_Severity'  # Replace if your label is different
+X = df.drop(target_column, axis=1)
+y = df[target_column]
+
+# Split data into training and testing
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train Random Forest model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Predict and evaluate
+y_pred = model.predict(X_test)
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+# Feature importance
+importances = pd.Series(model.feature_importances_, index=X.columns)
+top_features = importances.nlargest(10)
+
+plt.figure(figsize=(10, 6))
+top_features.plot(kind='barh', color='skyblue')
+plt.title("Top 10 Factors Influencing Traffic Accident Severity")
+plt.xlabel("Importance Score")
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.show()
