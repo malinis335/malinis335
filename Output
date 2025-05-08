@@ -1,0 +1,24 @@
+precious recall  f1-sre   support
+
+           0       0.73      0.82      0.77       146
+           1       0.17      0.11      0.13        38
+           2       0.00      0.00      0.00        16
+
+    accuracy                           0.62       200
+   macro avg       0.30      0.31      0.30       200
+weighted avg       0.56      0.62      0.59       200
+
+Class 0 is predicted fairly well.
+
+Classes 1 and 2 perform poorly, likely due to class imbalance or insufficient feature separation.
+
+
+
+---
+
+Feature Importance Plot
+
+The bar chart shows the top 10 most important features affecting accident severity (e.g., Speed, Vehicle Age, road and weather conditions).
+
+If you'd like, I can show how to balance the classes or improve the model's performance. Want to try that?
+
